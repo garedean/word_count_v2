@@ -15,13 +15,16 @@ var wordCount = function(phrase) {
   return sortHash(wordCounts);
 };
 
+// Returns a multi-dimensional array: [["word", 2], ["another word", 1]]
 var sortHash = function(hash) {
   var sortable = [];
 
+  // Convert hash to array
   for (var key in hash) {
     sortable.push([key, hash[key]]);
   }
 
+  // Sort words by word count
   sortable.sort(function(a, b) {
     return a[1] < b[1];
   });
@@ -29,33 +32,19 @@ var sortHash = function(hash) {
   return sortable;
 };
 
+var populateWordCounts = function(wordCounts) {
 
-// var sortHash = function(hash) {
-//   var keyArray = []
-//   var keyValueArray = []
-//   for (var key in hash) {
-//     keyArray.push(key);
-//   }
-//
-//   keyArray.forEach(function(key) {
-//     if (hash[key] > hash[keyArray[0]]) {
-//     var keyIndex = keyArray.indexOf(key)
-//     keyArray.splice(keyIndex, 1);
-//     keyArray.unshift(key);
-//   }
-//   });
-//   keyArray.forEach(function(key)  {
-// //     keyValueArray.push([key, hash[key]])
-// //   });
-// console.log(keyArray)
-//   return keyValueArray;
-// };
+  // For each sorted word and count, show it on screen as list item
+  for (var key in wordCounts) {
+    $("#result").append("<li>" + wordCounts[key][0] + ": " + wordCounts[key][1] + "</li");
+  }
+}
 
 $(function() {
   $("form").submit(function() {
-
     $("#result-wrapper").show();
-    $("#result").text(wordCount($("input").val()));
+    $("#result").empty();
+    populateWordCounts(wordCount($("input").val()));
     return false;
   });
 });
